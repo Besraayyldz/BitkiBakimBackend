@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using BitkiBakimBackend.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models; // Swagger için gerekli
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,12 +25,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
-// Swagger Ayarlarý (JWT Token için Authorize ekler)
+// CORS Ayarlarý
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// Swagger Ayarlarý
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "BitkiBakimBackend", Version = "v1" });
 
-    // JWT destekli Authorize (kilit butonu için)
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -68,9 +78,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// app.UseHttpsRedirection();
+app.UseRouting(); // Eðer eklenmemiþse ekle
 
-app.UseAuthentication(); // Önemli: Authorization'dan önce olmalý
+app.UseCors("AllowAll"); // CORS middleware aktif (Doðru sýrada)
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

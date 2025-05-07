@@ -29,7 +29,8 @@ namespace BitkiBakimBackend.Controllers
         {
             if (_context.Users.Any(u => u.Username == request.Username))
             {
-                return BadRequest("Kullanıcı adı zaten mevcut.");
+                // JSON olarak hata mesajı döndür
+                return BadRequest(new { message = "Kullanıcı adı zaten mevcut." });
             }
 
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Password);
@@ -44,7 +45,7 @@ namespace BitkiBakimBackend.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return Ok("Kullanıcı başarıyla oluşturuldu.");
+            return Ok(new { message = "Kullanıcı başarıyla oluşturuldu." });
         }
 
         [HttpPost("login")]
@@ -53,7 +54,8 @@ namespace BitkiBakimBackend.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Username == request.Username);
             if (user == null || !BCrypt.Net.BCrypt.Verify(request.Password, user.PasswordHash))
             {
-                return Unauthorized("Geçersiz kullanıcı adı veya şifre.");
+                // JSON olarak hata mesajı döndür
+                return Unauthorized(new { message = "Geçersiz kullanıcı adı veya şifre." });
             }
 
             var token = CreateToken(user);

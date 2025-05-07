@@ -146,3 +146,4 @@ C:\Users\ayyld\source\repos\BitkiBakimBackend\BitkiBakimBackend\bin\Debug\net8.0
 C:\Users\ayyld\source\repos\BitkiBakimBackend\BitkiBakimBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\ayyld\source\repos\BitkiBakimBackend\BitkiBakimBackend\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\ayyld\source\repos\BitkiBakimBackend\BitkiBakimBackend\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\ayyld\source\repos\BitkiBakimBackend\BitkiBakimBackend\obj\Debug\net8.0\BitkiBakimBackend.sourcelink.json
